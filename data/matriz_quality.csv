@@ -1,17 +1,17 @@
 tipo,item,criterio,peso,detonante_falla,subitems
+tipo,item,criterio,peso,detonante_falla,subitems
 critico,INFORMACIÓN CORRECTA Y COMPLETA,ECUF,0,NO,Información errada;Información incompleta
-critico,MALTRATO AL CLIENTE,ECUF,0,SI,Cuelga la llamada;Uso de palabras ofensivas o despectivas;Tono sarcástico o intolerante
-critico,PROCESO,ECUF,0,NO,Tenencia de línea para migración;Digitación de venta de forma correcta;Gestión a nombre de terceros
-critico,OFRECIMIENTO COMERCIAL CORRECTO,ECN,0,NO,Perfilamiento;Resumen de venta;Cierre comercial;Manejo de objeciones (mínimo 3 con coherencia)
-critico,TIPIFICACIÓN Y REGISTRO,ECN,0,NO,Tipificación correcta de acuerdo con la gestión;Registro / Plantilla de venta completo y correcto
-critico,CUMPLIMIENTO LEGAL Y REGULATORIO,ECC,0,NO,Habeas Data (lectura íntegra antes de solicitar datos);ATDP Digital (solicitud conforme al procedimiento notificación del medio y aceptación);Contrato (lectura o envío completo sin modificaciones notificación y aceptación);Validación de identidad (confirmación del titular notificación);Gestión a nombre de terceros
-blanda,Escucha activa,N/A,10,N/A,
-blanda,Empatía y personalización,N/A,10,N/A,
-blanda,Presentación del producto,N/A,10,N/A,
-blanda,Ortografía y redacción (canal chat),N/A,15,N/A,
-blanda,Generación de confianza,N/A,15,N/A,
-blanda,Pre-cierre comercial,N/A,15,N/A,
-blanda,Perfilamiento comercial,N/A,15,N/A,
-blanda,Acompañamiento al cliente en tiempos de espera,N/A,10,N/A,
-estadistico,Ocupación de canal,N/A,0,N/A,
-estadistico,PQR procedentes para el cliente,N/A,0,N/A,
+critico,MANEJO DE DATOS CONFIDENCIALES,SEGURIDAD DE LA INFORMACIÓN,0,SI,Solicitar contraseñas;No enmascarar datos de tarjeta;Compartir datos con terceros
+critico,VALIDACIÓN DE IDENTIDAD,ECUF,0,SI,Omitir protocolo de seguridad;Validar con datos incorrectos;Dar información antes de validar
+critico,TRATO RESPETUOSO (CERO AGRESIONES),INTEGRIDAD,0,SI,Alzar la voz al cliente;Uso de palabras soeces;Colgar llamada de manera intencional
+blanda,SALUDO Y BIENVENIDA CORPORATIVA,CONEXIÓN,5,NO,No mencionar el nombre de la campaña;No saludar;No presentarse con su nombre
+blanda,ESCUCHA ACTIVA Y REPETICIÓN,CONEXIÓN,10,NO,Interrumpir constantemente;No parafrasear la necesidad del cliente;Ignorar solicitudes explícitas
+blanda,EMPATÍA Y CALIDEZ,CONEXIÓN,15,NO,Tono de voz robótico o plano;Falta de cortesía;No usar palabras de agradecimiento
+blanda,LENGUAJE PROFESIONAL,CONEXIÓN,10,NO,Uso de muletillas excesivas;Uso de diminutivos o jergas;Tutear sin autorización
+blanda,MANEJO DE OBJECIONES,CONEXIÓN,15,NO,Discutir con el usuario;No ofrecer alternativas viables;Evadir preguntas difíciles
+blanda,CIERRE Y DESPEDIDA,CONEXIÓN,5,NO,No validar si persisten dudas;No usar despedida corporativa;Omitir agradecimiento
+estadistico,TIEMPO EN RETENCIÓN (HOLD),EFICIENCIA/PROCESO,5,NO,Exceder tiempo máximo en espera;No pedir autorización para hold;No retomar cada 45 segundos
+estadistico,TIEMPO TOTAL DE OPERACIÓN (AHT),EFICIENCIA,10,NO,Silencios prolongados en llamada;Conversaciones ajenas a la solicitud;Demora en carga de sistemas
+estadistico,REGISTRO Y TIPIFICACIÓN EN CRM,PROCESO,10,NO,Omitir registro de notas;Tipificar bajo un motivo errado;Dejar comentarios incompletos
+estadistico,RESOLUCIÓN EN PRIMER CONTACTO (FCR),EFICIENCIA,10,NO,No solucionar de raíz;Derivar al área equivocada;Instar al usuario a volver a llamar
+estadistico,TRANSFERENCIA DE LLAMADA (SI APLICA),PROCESO,5,NO,No anunciar la transferencia;No resumir el caso al siguiente asesor;Omitir el protocolo de paso
