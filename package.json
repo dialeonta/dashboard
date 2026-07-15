@@ -1,7 +1,7 @@
 {
-  "name": "dashboard-calidad-2",
+  "name": "quality-dashboard",
   "version": "1.0.0",
-  "description": "Plataforma de auditorías de calidad para asesores de call center",
+  "description": "Quality audit platform for call center advisors",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

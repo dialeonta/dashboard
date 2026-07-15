@@ -1,4 +1,4 @@
-# Quality Dashboard 2.0
+# Quality Dashboard
 
 A premium quality audit and analytics dashboard platform designed for call center agents. It features a complete quality monitoring flow, performance tracking via interactive charts, quartile segmentation, historical reporting, and a reliable dynamic offline mode.
 
