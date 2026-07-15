@@ -5,6 +5,10 @@ const DATA_DIR = path.join(__dirname, 'data', 'evaluations');
 const MATRIX_CSV_PATH = path.join(__dirname, 'data', 'matriz_quality.csv');
 const ADVISORS_CSV_PATH = path.join(__dirname, 'data', 'advisors.csv');
 
+function safeTrim(val) {
+  return (val !== null && val !== undefined) ? String(val).trim() : '';
+}
+
 // 1. Get quality matrix from CSV file
 function getMatrixFromCSV() {
   if (!fs.existsSync(MATRIX_CSV_PATH)) {
@@ -15,14 +19,20 @@ function getMatrixFromCSV() {
   const lines = fileContent.split(/\r?\n/);
   if (lines.length === 0) return [];
 
-  const headers = lines[0].split(',').map(h => h.trim());
+  // Detect separator (comma, semicolon, or tab)
+  const firstLine = lines[0];
+  let sep = ',';
+  if (firstLine.includes(';')) sep = ';';
+  else if (firstLine.includes('\t')) sep = '\t';
+
+  const headers = firstLine.split(sep).map(h => safeTrim(h));
   const matrix = [];
 
   for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
+    const line = safeTrim(lines[i]);
     if (!line) continue;
 
-    // Split line respecting double quotes
+    // Split line respecting double quotes and detected separator
     const parts = [];
     let currentPart = '';
     let inQuotes = false;
@@ -30,7 +40,7 @@ function getMatrixFromCSV() {
       const char = line[c];
       if (char === '"') {
         inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
+      } else if (char === sep && !inQuotes) {
         parts.push(currentPart);
         currentPart = '';
       } else {
@@ -41,12 +51,12 @@ function getMatrixFromCSV() {
 
     if (parts.length >= headers.length) {
       const item = {
-        tipo: parts[0].trim(),
-        item: parts[1].trim(),
-        criterio: parts[2].trim(),
+        tipo: safeTrim(parts[0]),
+        item: safeTrim(parts[1]),
+        criterio: safeTrim(parts[2]),
         peso: parseFloat(parts[3]) || 0,
-        detonante_falla: parts[4].trim(),
-        subitems: parts[5] ? parts[5].split(';').map(s => s.trim()).filter(Boolean) : []
+        detonante_falla: safeTrim(parts[4]),
+        subitems: parts[5] ? parts[5].split(';').map(s => safeTrim(s)).filter(Boolean) : []
       };
       matrix.push(item);
     }
@@ -82,17 +92,17 @@ function getAdvisorsFromCSV() {
   else if (firstLine.includes('\t')) sep = '\t';
 
   // Parse headers and clean them up
-  const headers = firstLine.split(sep).map(h => h.trim().toLowerCase().replace(/"/g, ''));
+  const headers = firstLine.split(sep).map(h => safeTrim(h).toLowerCase().replace(/"/g, ''));
   
   let campaignIdx = -1;
   let advisorIdx = -1;
 
   // Search for the mandatory header columns
   headers.forEach((h, idx) => {
-    if (h.includes('campa') || h.includes('campaign') || h.includes('camp')) {
+    if (h && (h.includes('campa') || h.includes('campaign') || h.includes('camp'))) {
       campaignIdx = idx;
     }
-    if (h.includes('asesor') || h.includes('nombre') || h.includes('agent') || h.includes('colaborador')) {
+    if (h && (h.includes('asesor') || h.includes('nombre') || h.includes('agent') || h.includes('colaborador'))) {
       advisorIdx = idx;
     }
   });
@@ -104,7 +114,7 @@ function getAdvisorsFromCSV() {
   const grouped = {};
 
   for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
+    const line = safeTrim(lines[i]);
     if (!line) continue;
 
     // Split line respecting double quotes and the detected separator
@@ -129,8 +139,8 @@ function getAdvisorsFromCSV() {
       continue;
     }
 
-    const campaign = parts[campaignIdx].trim().replace(/"/g, '');
-    const advisor = parts[advisorIdx].trim().replace(/"/g, '');
+    const campaign = safeTrim(parts[campaignIdx]).replace(/"/g, '');
+    const advisor = safeTrim(parts[advisorIdx]).replace(/"/g, '');
 
     if (campaign && advisor) {
       if (!grouped[campaign]) {
@@ -179,6 +189,6 @@ const DEFAULT_EVALUATIONS = ${JSON.stringify(evaluationsList, null, 2)};
   console.log('[SYNC] Sincronizacion de public/default_data.js completada con exito.');
   process.exit(0);
 } catch (error) {
-  console.error('[SYNC-ERROR] No se pudo sincronizar:', error.message);
+  console.error('[SYNC-ERROR] No se pudo sincronizar:', error.stack);
   process.exit(1);
 }

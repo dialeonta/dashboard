@@ -86,14 +86,20 @@ function getMatrixFromCSV() {
   const lines = fileContent.split(/\r?\n/);
   if (lines.length === 0) return [];
 
-  const headers = lines[0].split(',').map(h => h.trim());
+  // Detect separator (comma, semicolon, or tab)
+  const firstLine = lines[0];
+  let sep = ',';
+  if (firstLine.includes(';')) sep = ';';
+  else if (firstLine.includes('\t')) sep = '\t';
+
+  const headers = firstLine.split(sep).map(h => h.trim());
   const matrix = [];
 
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (!line) continue;
 
-    // Split line respecting double quotes
+    // Split line respecting double quotes and detected separator
     const parts = [];
     let currentPart = '';
     let inQuotes = false;
@@ -101,7 +107,7 @@ function getMatrixFromCSV() {
       const char = line[c];
       if (char === '"') {
         inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
+      } else if (char === sep && !inQuotes) {
         parts.push(currentPart);
         currentPart = '';
       } else {
@@ -112,11 +118,11 @@ function getMatrixFromCSV() {
 
     if (parts.length >= headers.length) {
       const item = {
-        tipo: parts[0].trim(),
-        item: parts[1].trim(),
-        criterio: parts[2].trim(),
+        tipo: parts[0] ? parts[0].trim() : '',
+        item: parts[1] ? parts[1].trim() : '',
+        criterio: parts[2] ? parts[2].trim() : '',
         peso: parseFloat(parts[3]) || 0,
-        detonante_falla: parts[4].trim(),
+        detonante_falla: parts[4] ? parts[4].trim() : '',
         subitems: parts[5] ? parts[5].split(';').map(s => s.trim()).filter(Boolean) : []
       };
       matrix.push(item);
