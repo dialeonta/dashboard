@@ -1,0 +1,141 @@
+{
+  "asesor": "FABIAN ANCIZAR SALAZAR HUERTAS",
+  "campana": "WCB HOGAR",
+  "supervisor": "RONALDO TORDECILLA",
+  "auditor": "Jenniffer Arangure Bejarano",
+  "celular": "3103243664",
+  "fechaLlamada": "2026-07-11",
+  "fecha": "2026-07-13",
+  "observacionesGenerales": "Cliente desea internet, solo, ciudad Tuluá, se ofrece plan de 500 Mg full + una plataforma Netflix, Amazon o Win 89900, si es con Amazon 79.900, cliente desea de 900 Mg, informas que es el mismo valor solo que depende la dirección, cliente  informa que le ofrecieron plan de 900Mg como en 70, pides dirección  calle 39c # 18-94 casa, pides tiempo en línea (se realiza retro con supervisor encargado Mateo, para reforzar lectura de habeas), retomas y solicitas nombre del cliente e informas guion de habeas, cliente pregunta si es necesario  aceptar, explicas que para poder brindarle la información si, cliente acepta, confirmas casa y solicitas nombre del barrio arboledas del Darien, retomas e informas que no hay cobertura. Cliente solicita que lo retiren de la base, agradeces por atender la llamada.",
+  "ecufScore": 100,
+  "ecnScore": 100,
+  "eccScore": 0,
+  "softSkillsScore": 90,
+  "globalScore": 77,
+  "detalles": [
+    {
+      "item": "INFORMACIÓN CORRECTA Y COMPLETA",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "MALTRATO AL CLIENTE",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "PROCESO",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "NO_CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "OFRECIMIENTO COMERCIAL CORRECTO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "NO_CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "TIPIFICACIÓN Y REGISTRO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "CUMPLIMIENTO LEGAL Y REGULATORIO",
+      "tipo": "critico",
+      "criterio": "ECC",
+      "resultado": "NO_CUMPLE",
+      "fallas": [
+        {
+          "subitem": "Habeas Data (lectura íntegra antes de solicitar datos)",
+          "fallo": true,
+          "observacion": "Recuerda que la lectura del guion de habeas se realiza con el fin de garantizar el derecho legal del usuario a decidir que se hace con su información antes de iniciar cualquier proceso comercial, por lo cual el cliente debe dar su aprobación antes de solicitarle los datos personales, en este caso la dirección, en este caso, pediste la dirección y posterior lees el guion."
+        }
+      ]
+    },
+    {
+      "item": "Escucha activa",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Empatía y personalización",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Presentación del producto",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Ortografía y redacción (canal chat)",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Generación de confianza",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Pre-cierre comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Perfilamiento comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Acompañamiento al cliente en tiempos de espera",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "NO",
+      "puntaje": 0,
+      "observacion": "Como recomendación informa al cliente que lo vas a dejar en línea para realizar las consultas y agradece el tiempo en espera al retomar la llamada."
+    },
+    {
+      "item": "Ocupación de canal",
+      "tipo": "estadistico",
+      "valor": "No"
+    },
+    {
+      "item": "PQR procedentes para el cliente",
+      "tipo": "estadistico",
+      "valor": "Sí"
+    }
+  ],
+  "id": "local_eval_1783984269531_o1im",
+  "createdAt": "2026-07-13T23:11:09.531Z"
+}

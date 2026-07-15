@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Calidad 2.0</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Background Glow Effects -->
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- Static Mode / Offline Warning Banner -->
+  <div id="static-banner" class="offline-banner hidden">
+    <i data-lucide="wifi-off"></i>
+    <span style="flex: 1; text-align: left;"><strong>Modo Local Activo:</strong> Las evaluaciones se guardarán en tu navegador. Puedes sincronizar tus archivos CSV locales:</span>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <input type="file" id="upload-csv-advisors" class="hidden" accept=".csv" onchange="handleCSVUpload(event, 'advisors')">
+      <input type="file" id="upload-csv-matrix" class="hidden" accept=".csv" onchange="handleCSVUpload(event, 'matrix')">
+      
+      <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('upload-csv-advisors').click()" style="background: rgba(0,0,0,0.15); color: #000; border-color: rgba(0,0,0,0.2); padding: 5px 10px; font-size: 0.78rem;" title="Import advisors.csv file to synchronize advisors and campaigns">
+        <i data-lucide="users" style="width: 13px; height: 13px;"></i> Cargar Advisors.csv
+      </button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('upload-csv-matrix').click()" style="background: rgba(0,0,0,0.15); color: #000; border-color: rgba(0,0,0,0.2); padding: 5px 10px; font-size: 0.78rem;" title="Importar archivo matriz_quality.csv para sincronizar la matriz de calidad">
+        <i data-lucide="table" style="width: 13px; height: 13px;"></i> Cargar Matriz.csv
+      </button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="clearLocalCSVCache()" style="background: rgba(220, 53, 69, 0.1); color: #b02a37; border-color: rgba(220, 53, 69, 0.2); padding: 5px 10px; font-size: 0.78rem;" title="Restablecer asesores y matriz a los valores por defecto iniciales">
+        <i data-lucide="refresh-cw" style="width: 13px; height: 13px;"></i> Restablecer
+      </button>
+    </div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <i data-lucide="award" class="logo-icon spin"></i>
+        <span class="logo-text">Dashboard de <span class="logo-accent">Calidad v2</span></span>
+      </div>
+      
+      <!-- AUDITOR IDENTIFICATION -->
+      <div id="auditor-identity-container" class="auditor-identity-badge" onclick="promptAuditorNameChange()">
+        <i data-lucide="user-check"></i>
+        <span id="display-auditor-name">Analista: -</span>
+        <button class="edit-auditor-btn" title="Editar nombre de analista">
+          <i data-lucide="edit-3"></i>
+        </button>
+      </div>
+
+      <nav class="app-nav">
+        <button id="nav-btn-audit" class="nav-link active" onclick="switchView('audit')">
+          <i data-lucide="clipboard-check"></i> Nueva Auditoría
+        </button>
+        <button id="nav-btn-history" class="nav-link" onclick="switchView('history')">
+          <i data-lucide="history"></i> Histórico
+        </button>
+        <button id="nav-btn-dashboard" class="nav-link" onclick="switchView('dashboard')">
+          <i data-lucide="bar-chart-3"></i> Dashboard
+        </button>
+        <button id="nav-btn-help" class="nav-link" onclick="switchView('help')">
+          <i data-lucide="help-circle"></i> Manual Offline
+        </button>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+          <i data-lucide="sun" id="theme-icon-sun" class="hidden"></i>
+          <i data-lucide="moon" id="theme-icon-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="app-main">
+    
+    <!-- VIEW 1: AUDIT FORM -->
+    <section id="view-audit" class="view-content active">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Nueva Auditoría de Calidad</h1>
+          <p class="view-subtitle">Realiza el monitoreo y califica los parámetros de calidad del asesor.</p>
+        </div>
+        <div class="live-score-badge">
+          <span class="score-label">Nota Global</span>
+          <span id="live-global-score" class="score-val">100.0%</span>
+        </div>
+      </div>
+
+      <form id="audit-form" onsubmit="saveAudit(event)">
+        <!-- Form Section: Metadata -->
+        <div class="form-card card-glass">
+          <div class="card-header">
+            <div class="flex-align">
+              <i data-lucide="user-plus" class="card-header-icon"></i>
+              <h2>Información de la Auditoría</h2>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="meta-auditor">Auditor / Analista de Calidad</label>
+              <div class="input-wrapper">
+                <i data-lucide="shield-check" class="input-icon"></i>
+                <input type="text" id="meta-auditor" placeholder="Cargando..." required readonly style="opacity: 0.8; cursor: not-allowed;" title="Nombre del auditor de calidad que firmará el registro">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-campana">Campaña</label>
+              <div class="input-wrapper">
+                <i data-lucide="layers" class="input-icon"></i>
+                <select id="meta-campana" required onchange="handleCampaignChange()">
+                  <option value="" disabled selected>Cargando campañas...</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-asesor">Asesor Evaluado</label>
+              <div class="input-wrapper">
+                <i data-lucide="user" class="input-icon"></i>
+                <select id="meta-asesor" required onchange="handleAdvisorChange()">
+                  <option value="" disabled selected>Selecciona primero la campaña</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-supervisor">Supervisor</label>
+              <div class="input-wrapper">
+                <i data-lucide="users" class="input-icon"></i>
+                <input type="text" id="meta-supervisor" placeholder="Supervisor del asesor" required readonly style="opacity: 0.8; cursor: not-allowed;" title="El supervisor se asocia automáticamente al seleccionar el asesor">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-celular">Teléfono</label>
+              <div class="input-wrapper">
+                <i data-lucide="phone" class="input-icon"></i>
+                <input type="text" id="meta-celular" placeholder="Número de teléfono" required pattern="[0-9]{7,15}" title="Ingresa un número de teléfono de 7 a 15 dígitos">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-fecha-llamada">Fecha de la llamada</label>
+              <div class="input-wrapper">
+                <i data-lucide="calendar" class="input-icon"></i>
+                <input type="date" id="meta-fecha-llamada" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="meta-fecha">Fecha de la Auditoría</label>
+              <div class="input-wrapper">
+                <i data-lucide="calendar" class="input-icon"></i>
+                <input type="date" id="meta-fecha" required readonly style="opacity: 0.8; cursor: not-allowed;" title="La fecha de la auditoría corresponde al día actual en que se realiza">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Section: Accordion Matrix -->
+        <div class="matrix-layout">
+          <!-- Left Column: Critical Items Accordion & General Observations -->
+          <div class="matrix-col-left">
+            <div class="section-title-wrapper">
+              <i data-lucide="alert-triangle" class="sec-icon red"></i>
+              <h3>Ítems Críticos (ECUF / ECN / ECC)</h3>
+            </div>
+            
+            <div class="accordion-container" id="critical-accordion">
+              <!-- Dynamically populated from JS -->
+              <div class="empty-state">
+                <i data-lucide="loader-2" class="animate-spin"></i> Cargando matriz de calidad...
+              </div>
+            </div>
+            
+            <!-- Campo de Observación General (SITUADO DESPUÉS DE LOS ÍTEMS CRÍTICOS) -->
+            <div class="form-card card-glass" style="margin-top: 24px;">
+              <div class="card-header border-purple">
+                <div class="flex-align">
+                  <i data-lucide="message-square" class="card-header-icon text-purple"></i>
+                  <h2>Observación General</h2>
+                </div>
+              </div>
+              <div style="display: block;">
+                <textarea id="meta-observaciones" placeholder="Escribe aquí las observaciones generales del monitoreo de calidad..." rows="4" style="resize: vertical; min-height: 100px; padding: 12px 14px; font-family: var(--font-sans); width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--text-primary); outline: none; transition: border-color 0.3s ease;"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Soft Skills & Stats -->
+          <div class="matrix-col-right">
+            <!-- Soft Skills Block -->
+            <div class="form-card card-glass">
+              <div class="card-header border-cyan">
+                <div class="flex-align">
+                  <i data-lucide="heart" class="card-header-icon text-cyan"></i>
+                  <h2>Habilidades Blandas</h2>
+                </div>
+                <div class="section-score" id="score-habilidades">100 / 100 pts</div>
+              </div>
+              
+              <div class="skills-container" id="skills-list">
+                <!-- Dynamically populated from JS -->
+              </div>
+            </div>
+
+            <!-- Stats Block -->
+            <div class="form-card card-glass" style="margin-top: 24px;">
+              <div class="card-header border-purple">
+                <div class="flex-align">
+                  <i data-lucide="trending-up" class="card-header-icon text-purple"></i>
+                  <h2>Ítems Estadísticos (Sin Peso)</h2>
+                </div>
+              </div>
+              <div class="stats-container" id="stats-list">
+                <!-- Dynamically populated from JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Submission Actions -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="resetForm()">
+            <i data-lucide="trash-2"></i> Limpiar Formulario
+          </button>
+          <button type="submit" class="btn btn-primary btn-glow">
+            <i data-lucide="save"></i> Guardar Auditoría
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- VIEW 2: HISTORY TABLE -->
+    <section id="view-history" class="view-content">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Histórico de Auditorías</h1>
+          <p class="view-subtitle">Consulta, filtra y gestiona los monitoreos registrados.</p>
+        </div>
+        <div class="header-actions">
+          <!-- Hidden Input for JSON Import -->
+          <input type="file" id="import-json-file" class="hidden" accept=".json" onchange="importJSONBackup(event)">
+          
+          <button class="btn btn-secondary btn-sm" onclick="const inp = document.getElementById('import-json-file'); inp.value = ''; inp.click();" title="Importar evaluaciones en JSON">
+            <i data-lucide="upload"></i> Importar JSON
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="exportJSONBackup()" title="Exportar todas las evaluaciones de la sesión actual en un archivo JSON">
+            <i data-lucide="download"></i> Respaldar JSON
+          </button>
+          <button class="btn btn-primary btn-sm btn-glow" onclick="exportHistoryToExcel()">
+            <i data-lucide="file-spreadsheet"></i> Exportar Excel (CSV)
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters Card -->
+      <div class="form-card card-glass filter-card">
+        <div class="filter-grid">
+          <div class="filter-group">
+            <label for="filter-search">Buscador</label>
+            <div class="input-wrapper">
+              <i data-lucide="search" class="input-icon"></i>
+              <input type="text" id="filter-search" placeholder="Asesor o auditor..." oninput="applyFilters()">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="filter-campana">Filtrar por Campaña</label>
+            <div class="input-wrapper">
+              <i data-lucide="layers" class="input-icon"></i>
+              <select id="filter-campana" onchange="applyFilters()">
+                <option value="">Todas las campañas</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="filter-fecha-inicio">Desde</label>
+            <div class="input-wrapper">
+              <i data-lucide="calendar" class="input-icon"></i>
+              <input type="date" id="filter-fecha-inicio" onchange="applyFilters()">
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="filter-fecha-fin">Hasta</label>
+            <div class="input-wrapper">
+              <i data-lucide="calendar" class="input-icon"></i>
+              <input type="date" id="filter-fecha-fin" onchange="applyFilters()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Card -->
+      <div class="form-card card-glass table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Fecha Monitoreo</th>
+              <th>Supervisor</th>
+              <th>Campaña</th>
+              <th>Auditor</th>
+              <th>ECUF</th>
+              <th>ECN</th>
+              <th>ECC</th>
+              <th>Blandas</th>
+              <th style="text-align: center;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+        
+        <!-- Empty State -->
+        <div id="history-empty-state" class="empty-state hidden">
+          <i data-lucide="folder-open"></i>
+          <p>No se encontraron evaluaciones registradas que coincidan con los filtros.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: DASHBOARD -->
+    <section id="view-dashboard" class="view-content">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Dashboard Analítico</h1>
+          <p class="view-subtitle">Resumen cuantitativo e indicadores clave de desempeño de calidad.</p>
+        </div>
+      </div>
+
+      <!-- Dashboard Filters Card -->
+      <div class="form-card card-glass filter-card" style="margin-bottom: 24px;">
+        <div class="filter-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="filter-group">
+            <label for="dash-filter-supervisor">Filtrar por Supervisor</label>
+            <div class="input-wrapper">
+              <i data-lucide="users" class="input-icon"></i>
+              <select id="dash-filter-supervisor" onchange="applyDashboardFilters()">
+                <option value="">Todos los supervisores</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="dash-filter-campana">Filtrar por Campaña</label>
+            <div class="input-wrapper">
+              <i data-lucide="layers" class="input-icon"></i>
+              <select id="dash-filter-campana" onchange="applyDashboardFilters()">
+                <option value="">Todas las campañas</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label for="dash-filter-item">Filtrar por Ítem de Calidad</label>
+            <div class="input-wrapper">
+              <i data-lucide="help-circle" class="input-icon"></i>
+              <select id="dash-filter-item" onchange="applyDashboardFilters()">
+                <option value="">Todos los ítems de calidad</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid">
+        <div class="form-card card-glass kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Auditorías Totales</span>
+            <span id="kpi-total" class="kpi-value">0</span>
+            <div class="kpi-trend">
+              <i data-lucide="clipboard"></i> Evaluaciones completadas
+            </div>
+          </div>
+          <div class="kpi-icon-wrapper bg-indigo-glow text-indigo">
+            <i data-lucide="check-square" class="kpi-icon"></i>
+          </div>
+        </div>
+
+        <div class="form-card card-glass kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Promedio de Calidad</span>
+            <span id="kpi-promedio" class="kpi-value">0.0%</span>
+            <div class="kpi-trend">
+              <i data-lucide="trending-up"></i> Calificación global
+            </div>
+          </div>
+          <div class="kpi-icon-wrapper bg-green-glow text-green">
+            <i data-lucide="activity" class="kpi-icon"></i>
+          </div>
+        </div>
+
+        <div class="form-card card-glass kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Cumplimiento ECUF</span>
+            <span id="kpi-ecuf" class="kpi-value">0.0%</span>
+            <div class="kpi-trend">
+              <i data-lucide="smile"></i> Criterio usuario final
+            </div>
+          </div>
+          <div class="kpi-icon-wrapper bg-rose-glow text-rose">
+            <i data-lucide="heart-handshake" class="kpi-icon"></i>
+          </div>
+        </div>
+
+        <div class="form-card card-glass kpi-card">
+          <div class="kpi-content">
+            <span class="kpi-label">Cumplimiento ECN</span>
+            <span id="kpi-ecn" class="kpi-value">0.0%</span>
+            <div class="kpi-trend">
+              <i data-lucide="briefcase"></i> Criterio de negocio
+            </div>
+          </div>
+          <div class="kpi-icon-wrapper bg-yellow-glow text-yellow">
+            <i data-lucide="shopping-bag" class="kpi-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="charts-grid">
+        <div class="form-card card-glass chart-card">
+          <div class="chart-header">
+            <h3>Consolidado por Supervisor</h3>
+            <p>Porcentaje de cumplimiento de su equipo (más cercano a 100%)</p>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-supervisor"></canvas>
+          </div>
+        </div>
+
+        <div class="form-card card-glass chart-card">
+          <div class="chart-header">
+            <h3>Ítems de Mayor Afectación</h3>
+            <p>Frecuencia de fallas críticas registradas de mayor a menor</p>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-failures"></canvas>
+          </div>
+        </div>
+
+        <div class="form-card card-glass chart-card">
+          <div class="chart-header">
+            <h3>Porcentaje de Error Crítico por Campaña</h3>
+            <p>Monitoreos con al menos una falla crítica (del mejor al peor)</p>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-campaign-errors"></canvas>
+          </div>
+        </div>
+
+        <div class="form-card card-glass chart-card">
+          <div class="chart-header">
+            <h3>Asesores con Más Errores Cometidos</h3>
+            <p>Cantidad de fallas críticas cometidas por cada asesor</p>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-analyst-errors"></canvas>
+          </div>
+        </div>
+
+        <div class="form-card card-glass chart-card" style="grid-column: span 2;">
+          <div class="chart-header">
+            <h3>Radar de Habilidades Blandas</h3>
+            <p>Porcentaje de cumplimiento promedio por cada habilidad blanda</p>
+          </div>
+          <div class="chart-wrapper" style="height: 380px;">
+            <canvas id="chart-soft-skills"></canvas>
+          </div>
+        </div>
+
+        <!-- Card: Quartile Analysis -->
+        <div class="form-card card-glass" style="grid-column: span 2; margin-top: 16px;">
+          <div class="chart-header" style="margin-bottom: 16px;">
+            <h3>Segmentación por Cuartiles de Asesores</h3>
+            <p>Clasificación y distribución de asesores según su desempeño global promedio</p>
+          </div>
+          
+          <div class="table-container" style="max-height: 450px; overflow-y: auto;">
+            <table class="data-table" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Asesor</th>
+                  <th>Campaña</th>
+                  <th>Supervisor</th>
+                  <th style="text-align: center;">Auditorías</th>
+                  <th style="text-align: center;">Nota Promedio</th>
+                  <th style="text-align: center;">Cuartil</th>
+                </tr>
+              </thead>
+              <tbody id="quartile-table-body">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: HELP / OFFLINE MANUAL -->
+    <section id="view-help" class="view-content">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Manual de Operación Offline</h1>
+          <p class="view-subtitle">Guía paso a paso para gestionar evaluaciones y respaldos en modo desconectado.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <!-- Card 1: ¿Qué es el modo Offline? -->
+        <div class="form-card card-glass" style="grid-column: span 2;">
+          <div class="card-header">
+            <i data-lucide="info" class="card-header-icon" style="color: var(--color-cyan);"></i>
+            <h2>Operación en Carpeta Compartida sin Servidor</h2>
+          </div>
+          <div style="line-height: 1.6; font-size: 0.95rem; color: var(--text-primary);">
+            <p>Este sistema está diseñado para funcionar de manera autónoma directamente desde la carpeta compartida en red local (haciendo doble clic en <strong>index.html</strong>) sin requerir instalaciones ni servidores Node.js activos.</p>
+            <p style="margin-top: 10px;">En este modo estático, los datos se almacenan de manera local y aislada en el navegador web de cada usuario. Para asegurar que la información no se pierda al limpiar el historial o cambiar de equipo, se deben seguir los siguientes pasos de carga y descarga de respaldos.</p>
+          </div>
+        </div>
+
+        <!-- Card 2: Paso a paso para Descargar (Respaldar) -->
+        <div class="form-card card-glass" style="grid-column: span 2;">
+          <div class="card-header">
+            <i data-lucide="download" class="card-header-icon" style="color: var(--color-green);"></i>
+            <h2>1. Cómo DESCARGAR / RESPALDAR la información</h2>
+          </div>
+          <div style="font-size: 0.9rem; line-height: 1.6;">
+            <p>Para resguardar tus evaluaciones en un archivo físico en tu computadora, sigue estos pasos:</p>
+            <ol style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <li>Haz clic en la pestaña <strong>Histórico</strong> en la barra superior.</li>
+              <li>Ubica la sección inferior de <strong>Controles de Respaldo Local</strong>.</li>
+              <li>Haz clic en el botón <strong>Exportar Evaluaciones (JSON)</strong>.</li>
+              <li>Se descargará automáticamente un archivo con extensión <strong>.json</strong> (ej: <code>respaldo_evaluaciones_2026-07-13.json</code>).</li>
+              <li>Guarda este archivo en una carpeta segura de tu red local o equipo de cómputo. **Este archivo contiene todo tu histórico**.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Card 3: Paso a paso para Cargar (Restaurar) -->
+        <div class="form-card card-glass" style="grid-column: span 2;">
+          <div class="card-header">
+            <i data-lucide="upload" class="card-header-icon" style="color: var(--color-purple);"></i>
+            <h2>2. Cómo CARGAR / IMPORTAR la información</h2>
+          </div>
+          <div style="font-size: 0.9rem; line-height: 1.6;">
+            <p>Si cambias de computadora, limpias el navegador o quieres consolidar datos en tu histórico local:</p>
+            <ol style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px;">
+              <li>Ve a la pestaña <strong>Histórico</strong> en la barra de navegación superior.</li>
+              <li>Baja hasta los <strong>Controles de Respaldo Local</strong>.</li>
+              <li>Haz clic en el botón <strong>Importar Evaluaciones (JSON)</strong>.</li>
+              <li>Selecciona el archivo <strong>.json</strong> de respaldo descargado previamente.</li>
+              <li>Confirma el mensaje en pantalla. El sistema fusionará los datos y actualizará tu histórico de inmediato sin duplicar registros.</li>
+            </ol>
+          </div>
+        </div>
+
+        <!-- Card 4: Exportación a Excel (CSV) -->
+        <div class="form-card card-glass" style="grid-column: span 2;">
+          <div class="card-header">
+            <i data-lucide="file-spreadsheet" class="card-header-icon" style="color: var(--color-yellow);"></i>
+            <h2>3. Generación de Informes para Excel (CSV)</h2>
+          </div>
+          <div style="font-size: 0.95rem; line-height: 1.6;">
+            <p>Si necesitas enviar las evaluaciones para reportes o abrirlas en Microsoft Excel:</p>
+            <ul style="margin-left: 20px; margin-top: 10px; display: flex; flex-direction: column; gap: 8px; list-style-type: disc;">
+              <li>En la pestaña <strong>Histórico</strong>, haz clic en el botón <strong>Exportar a CSV (Excel)</strong>.</li>
+              <li>El navegador descargará un archivo estructurado con formato delimitado por comas (.csv) compatible con Excel.</li>
+              <li>Puedes filtrar la información por rango de fechas, asesor o campaña antes de exportar, de modo que el archivo CSV contenga exactamente la información que tienes visible en la tabla.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: SHOW AUDIT DETAILS -->
+  <div id="detail-modal" class="modal-backdrop hidden" onclick="closeModal(event)">
+    <div class="form-card card-glass modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal(event)">
+        <i data-lucide="x"></i>
+      </button>
+      
+      <div class="modal-header-section">
+        <div>
+          <h2 id="modal-title" class="modal-title">Detalle de Auditoría</h2>
+          <p id="modal-subtitle-text" class="modal-subtitle">ID Evaluación: -</p>
+        </div>
+        <div id="modal-score" class="modal-score-badge">0.0%</div>
+      </div>
+
+      <div class="modal-body-scroll">
+        <!-- Section: Meta info -->
+        <div class="detail-section">
+          <h3>Encabezado de la Auditoría</h3>
+          <div class="detail-grid">
+            <div class="detail-item"><strong>Asesor:</strong> <span id="det-asesor">-</span></div>
+            <div class="detail-item"><strong>Supervisor:</strong> <span id="det-supervisor">-</span></div>
+            <div class="detail-item"><strong>Campaña:</strong> <span id="det-campana">-</span></div>
+            <div class="detail-item"><strong>Auditor:</strong> <span id="det-auditor">-</span></div>
+            <div class="detail-item"><strong>Teléfono:</strong> <span id="det-celular">-</span></div>
+            <div class="detail-item"><strong>Fecha Llamada:</strong> <span id="det-fecha-llamada">-</span></div>
+            <div class="detail-item"><strong>Fecha Auditoría:</strong> <span id="det-fecha">-</span></div>
+          </div>
+        </div>
+
+        <!-- Section: Score Breakdown -->
+        <div class="detail-section">
+          <h3>Desglose de Calificación</h3>
+          <div class="score-blocks-row">
+            <div class="score-block-card">
+              <span class="block-title">ECUF</span>
+              <span id="det-score-ecuf" class="block-score">-</span>
+            </div>
+            <div class="score-block-card">
+              <span class="block-title">ECN</span>
+              <span id="det-score-ecn" class="block-score">-</span>
+            </div>
+            <div class="score-block-card">
+              <span class="block-title">ECC</span>
+              <span id="det-score-ecc" class="block-score">-</span>
+            </div>
+            <div class="score-block-card">
+              <span class="block-title">Blandas</span>
+              <span id="det-score-soft" class="block-score">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Critical Failures -->
+        <div class="detail-section">
+          <h3>Fallas Críticas Detectadas</h3>
+          <div id="det-failures-list" class="failures-list-detail">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Section: Soft Skills Details -->
+        <div class="detail-section">
+          <h3>Detalle de Habilidades Blandas</h3>
+          <div id="det-soft-skills-list" class="soft-skills-grid-detail">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Section: Stats -->
+        <div class="detail-section">
+          <h3>Ítems Estadísticos</h3>
+          <div class="detail-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="detail-item"><strong>Ocupación de canal:</strong> <span id="det-stat-ocupacion">-</span></div>
+            <div class="detail-item"><strong>PQR procedentes:</strong> <span id="det-stat-pqr">-</span></div>
+          </div>
+        </div>
+
+        <!-- Section: General Observation -->
+        <div class="detail-section">
+          <h3>Observación General</h3>
+          <div class="form-card border-purple" style="padding: 12px 16px; font-size: 0.9rem; background: rgba(0, 0, 0, 0.15);">
+            <p id="det-observaciones" style="white-space: pre-wrap; line-height: 1.5; color: var(--text-primary);">-</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary btn-sm" onclick="closeModal(event)">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CUSTOM CONFIRMATION -->
+  <div id="confirm-modal" class="modal-backdrop hidden">
+    <div class="form-card card-glass modal-card" style="max-width: 400px; text-align: center; padding: 24px; margin-top: 15vh;">
+      <i data-lucide="help-circle" style="width: 48px; height: 48px; color: var(--color-purple); margin: 0 auto 16px auto;"></i>
+      <h3 id="confirm-modal-title" style="margin-bottom: 8px; font-size: 1.2rem; color: var(--text-primary);">¿Confirmar Importación?</h3>
+      <p id="confirm-modal-message" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5;">Se han detectado evaluaciones. ¿Deseas importarlas al histórico actual?</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button id="confirm-modal-btn-cancel" class="btn btn-secondary btn-sm" style="min-width: 90px; padding: 6px 12px;">Cancelar</button>
+        <button id="confirm-modal-btn-ok" class="btn btn-primary btn-sm btn-glow" style="min-width: 90px; padding: 6px 12px;">Aceptar</button>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL: INITIAL AUDITOR NAME -->
+  <div id="auditor-modal" class="modal-backdrop hidden">
+    <div class="form-card card-glass modal-card" style="max-width: 400px; padding: 24px; text-align: center; margin: 15vh auto 0 auto;">
+      <i data-lucide="shield-check" style="width: 48px; height: 48px; color: var(--color-purple); margin: 0 auto 16px auto;"></i>
+      <h3 style="margin-bottom: 8px; font-size: 1.2rem; color: var(--text-primary);">Analista de Calidad</h3>
+      <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5;">Ingresa tu nombre para firmar las auditorías que realices en esta sesión:</p>
+      <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+        <label for="auditor-name-input">Nombre Completo</label>
+        <div class="input-wrapper" style="margin-top: 6px;">
+          <i data-lucide="user" class="input-icon"></i>
+          <input type="text" id="auditor-name-input" placeholder="Ej: Diana Carolina Ulloa" required style="width: 100%; padding-left: 36px; height: 38px;">
+        </div>
+      </div>
+      <button id="auditor-modal-btn-save" class="btn btn-primary btn-sm btn-glow" style="width: 100%; padding: 10px; font-weight: 600;">Guardar y Continuar</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>&copy; 2026 Dashboard de Calidad 2.0. Diseñado para control y monitoreo de llamadas en entornos de red local.</p>
+  </footer>
+
+  <!-- Default Fallback Data -->
+  <script src="default_data.js"></script>
+  <!-- Unified storage/state utility -->
+  <script src="js/storage.js"></script>
+  <!-- Business models and CSV parsers -->
+  <script src="js/models.js"></script>
+  <!-- Dynamic views scripts -->
+  <script src="views/auditView.js"></script>
+  <script src="views/historyView.js"></script>
+  <script src="views/dashboardView.js"></script>
+  <script src="views/helpView.js"></script>
+  <!-- Main Application Coordinator Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>

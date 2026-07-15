@@ -1,0 +1,17 @@
+tipo,item,criterio,peso,detonante_falla,subitems
+critico,INFORMACIÓN CORRECTA Y COMPLETA,ECUF,0,NO,Información errada;Información incompleta
+critico,MALTRATO AL CLIENTE,ECUF,0,SI,Cuelga la llamada;Uso de palabras ofensivas o despectivas;Tono sarcástico o intolerante
+critico,PROCESO,ECUF,0,NO,Tenencia de línea para migración;Digitación de venta de forma correcta;Gestión a nombre de terceros
+critico,OFRECIMIENTO COMERCIAL CORRECTO,ECN,0,NO,Perfilamiento;Resumen de venta;Cierre comercial;Manejo de objeciones (mínimo 3 con coherencia)
+critico,TIPIFICACIÓN Y REGISTRO,ECN,0,NO,Tipificación correcta de acuerdo con la gestión;Registro / Plantilla de venta completo y correcto
+critico,CUMPLIMIENTO LEGAL Y REGULATORIO,ECC,0,NO,Habeas Data (lectura íntegra antes de solicitar datos);ATDP Digital (solicitud conforme al procedimiento notificación del medio y aceptación);Contrato (lectura o envío completo sin modificaciones notificación y aceptación);Validación de identidad (confirmación del titular notificación);Gestión a nombre de terceros
+blanda,Escucha activa,N/A,10,N/A,
+blanda,Empatía y personalización,N/A,10,N/A,
+blanda,Presentación del producto,N/A,10,N/A,
+blanda,Ortografía y redacción (canal chat),N/A,15,N/A,
+blanda,Generación de confianza,N/A,15,N/A,
+blanda,Pre-cierre comercial,N/A,15,N/A,
+blanda,Perfilamiento comercial,N/A,15,N/A,
+blanda,Acompañamiento al cliente en tiempos de espera,N/A,10,N/A,
+estadistico,Ocupación de canal,N/A,0,N/A,
+estadistico,PQR procedentes para el cliente,N/A,0,N/A,

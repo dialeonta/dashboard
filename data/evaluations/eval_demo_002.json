@@ -1,0 +1,132 @@
+{
+  "id": "eval_demo_002",
+  "asesor": "Carlos Gómez",
+  "auditor": "Ana Belén",
+  "celular": "3009876543",
+  "fechaLlamada": "2026-07-10",
+  "fecha": "2026-07-11",
+  "campana": "Atención al Cliente",
+  "ecufScore": 0,
+  "ecnScore": 100,
+  "eccScore": 100,
+  "softSkillsScore": 80,
+  "globalScore": 54,
+  "observacionesGenerales": "Lamentablemente se detecta maltrato al cliente. El asesor cuelga la llamada de manera abrupta en medio del reclamo del cliente.",
+  "detalles": [
+    {
+      "item": "INFORMACIÓN CORRECTA Y COMPLETA",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "MALTRATO AL CLIENTE",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "NO_CUMPLE",
+      "fallas": [
+        {
+          "subitem": "Cuelga la llamada",
+          "fallo": true,
+          "observacion": "Llamada finalizada intencionalmente por el asesor durante la queja."
+        }
+      ]
+    },
+    {
+      "item": "PROCESO",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "OFRECIMIENTO COMERCIAL CORRECTO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "TIPIFICACIÓN Y REGISTRO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "CUMPLIMIENTO LEGAL Y REGULATORIO",
+      "tipo": "critico",
+      "criterio": "ECC",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "Escucha activa",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Empatía y personalización",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "NO",
+      "puntaje": 0
+    },
+    {
+      "item": "Presentación del producto",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Ortografía y redacción (canal chat)",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Generación de confianza",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "NO",
+      "puntaje": 0
+    },
+    {
+      "item": "Pre-cierre comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Perfilamiento comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Acompañamiento al cliente en tiempos de espera",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Ocupación de canal",
+      "tipo": "estadistico",
+      "valor": "No"
+    },
+    {
+      "item": "PQR procedentes para el cliente",
+      "tipo": "estadistico",
+      "valor": "Sí"
+    }
+  ],
+  "createdAt": "2026-07-13T23:45:29.575Z"
+}

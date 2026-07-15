@@ -1,0 +1,126 @@
+{
+  "id": "eval_demo_001",
+  "asesor": "Jenniffer Arangure",
+  "auditor": "Juan Pérez",
+  "celular": "3104567890",
+  "fechaLlamada": "2026-07-09",
+  "fecha": "2026-07-10",
+  "campana": "Ventas Masivas",
+  "ecufScore": 100,
+  "ecnScore": 100,
+  "eccScore": 100,
+  "softSkillsScore": 90,
+  "globalScore": 97,
+  "observacionesGenerales": "El asesor demuestra excelente empatía y perfilamiento comercial. Cierre exitoso de la venta masiva de telefonía celular.",
+  "detalles": [
+    {
+      "item": "INFORMACIÓN CORRECTA Y COMPLETA",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "MALTRATO AL CLIENTE",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "PROCESO",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "OFRECIMIENTO COMERCIAL CORRECTO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "TIPIFICACIÓN Y REGISTRO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "CUMPLIMIENTO LEGAL Y REGULATORIO",
+      "tipo": "critico",
+      "criterio": "ECC",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "Escucha activa",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Empatía y personalización",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Presentación del producto",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Ortografía y redacción (canal chat)",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Generación de confianza",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Pre-cierre comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "NO",
+      "puntaje": 0
+    },
+    {
+      "item": "Perfilamiento comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15
+    },
+    {
+      "item": "Acompañamiento al cliente en tiempos de espera",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10
+    },
+    {
+      "item": "Ocupación de canal",
+      "tipo": "estadistico",
+      "valor": "Sí"
+    },
+    {
+      "item": "PQR procedentes para el cliente",
+      "tipo": "estadistico",
+      "valor": "No"
+    }
+  ],
+  "createdAt": "2026-07-13T23:45:29.570Z"
+}

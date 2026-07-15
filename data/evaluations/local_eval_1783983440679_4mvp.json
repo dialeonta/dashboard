@@ -1,0 +1,135 @@
+{
+  "asesor": "MARIA CAMILA RAMOS MARTINEZ",
+  "campana": "WCB HOGAR",
+  "supervisor": "RONALDO TORDECILLA",
+  "auditor": "Jenniffer Arangure Bejarano",
+  "celular": "3222114745",
+  "fechaLlamada": "2026-07-11",
+  "fecha": "2026-07-13",
+  "observacionesGenerales": "Cliente Edwuardo Forero,  solicita internet, solicita validar cobertura y lee guion, cliente interrumpe y pregunta por ftth, explicas que debes validar cobertura y procedes con el guio de habeas desde el principio, cliente acepta, dirección Ciudad Bogotá calle 78b#116-80 conjunto residencial altos de granada torre y apto 4  601\nTiempo en línea ok \nAgradeces \n900 mega simétricas con más de 98 canales, más plataformas a elección del cliente, descuento del 50% por dos primeros meses. Se escucha robotizado, procedes a informar al cliente la situación y devuelves la llamada para mejorar la comunicación. Cliente solicita paquete con 4 plataformas Win, Netflix, Disney y Amazon, explicas paquete de 2 plataformas plan de 121.900, cliente insiste en querer las 4, solicitas espera en línea, realizas acompañamiento, agradeces espera, explicas plan con dos plataformas Win + Netflix y adicional las plataformas Amazon y Disney, por un valor de 24.900 + 36.900 o 54.900 Disney premium, cliente interesado en el estándar de 36.900. cliente desea 3 decos, empaquetas el producto para una factura final de 197.700, con 3 decos, 4 plataformas (oferta triple digital internet plus).",
+  "ecufScore": 100,
+  "ecnScore": 100,
+  "eccScore": 100,
+  "softSkillsScore": 85,
+  "globalScore": 95.5,
+  "detalles": [
+    {
+      "item": "INFORMACIÓN CORRECTA Y COMPLETA",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "MALTRATO AL CLIENTE",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "PROCESO",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "OFRECIMIENTO COMERCIAL CORRECTO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "TIPIFICACIÓN Y REGISTRO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "CUMPLIMIENTO LEGAL Y REGULATORIO",
+      "tipo": "critico",
+      "criterio": "ECC",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "Escucha activa",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Empatía y personalización",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Presentación del producto",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Ortografía y redacción (canal chat)",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Generación de confianza",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Pre-cierre comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "NO",
+      "puntaje": 0,
+      "observacion": "Muy buena gestión, manejo comercial y de tiempos. Felicitaciones por el manejo que le diste a la lectura del habeas. Como recomendación para darle valor agregado a tu gestión, puedes buscar la forma de disminuir la factura haciendo más llamativa la oferta, en este caso empaquetar con Amazon y Win, y dejar como adicional Netflix y Disney, dejando el valor final del plan en 191.700 y resaltar el beneficio McAfee Premium 3 Equipos."
+    },
+    {
+      "item": "Perfilamiento comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Acompañamiento al cliente en tiempos de espera",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Ocupación de canal",
+      "tipo": "estadistico",
+      "valor": "No"
+    },
+    {
+      "item": "PQR procedentes para el cliente",
+      "tipo": "estadistico",
+      "valor": "No"
+    }
+  ],
+  "id": "local_eval_1783983440679_4mvp",
+  "createdAt": "2026-07-13T22:57:20.679Z"
+}

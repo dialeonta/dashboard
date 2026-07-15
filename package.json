@@ -1,0 +1,15 @@
+{
+  "name": "dashboard-calidad-2",
+  "version": "1.0.0",
+  "description": "Plataforma de auditorías de calidad para asesores de call center",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "author": "Diego Alejandro Leon Tamayo with collaboration of Jenniffer Arangure Bejarano",
+  "license": "MIT"
+}

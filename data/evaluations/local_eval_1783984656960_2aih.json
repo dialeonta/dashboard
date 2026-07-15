@@ -1,0 +1,135 @@
+{
+  "asesor": "FABIAN ANCIZAR SALAZAR HUERTAS",
+  "campana": "WCB HOGAR",
+  "supervisor": "RONALDO TORDECILLA",
+  "auditor": "Jenniffer Arangure Bejarano",
+  "celular": "3006481107",
+  "fechaLlamada": "2026-07-11",
+  "fecha": "2026-07-13",
+  "observacionesGenerales": "Cliente interesado en internet para santa marta, solicitas nombre del cliente Luis Vaquero, lees el guion de habeas, cliente acepta, dirección calle 28 # 13-114 edificio en santa marta, solicitas nombre del barrio, nombre del edificio babaro in, no se encuentra ftth, informas solo internet de 500 Mg, 1 plataforma 89.900 y descuento del 50% en la primera factura. Cliente interesado, pero desea pagar primero el servicio actual y luego llamar, dice que lo llames mas tarde, le informas que se puede programar la instalación, cliente pide que lo llames en la tarde, confirmas contacto a la 1 pm.",
+  "ecufScore": 100,
+  "ecnScore": 100,
+  "eccScore": 100,
+  "softSkillsScore": 75,
+  "globalScore": 92.5,
+  "detalles": [
+    {
+      "item": "INFORMACIÓN CORRECTA Y COMPLETA",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "MALTRATO AL CLIENTE",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "PROCESO",
+      "tipo": "critico",
+      "criterio": "ECUF",
+      "resultado": "NO_CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "OFRECIMIENTO COMERCIAL CORRECTO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "TIPIFICACIÓN Y REGISTRO",
+      "tipo": "critico",
+      "criterio": "ECN",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "CUMPLIMIENTO LEGAL Y REGULATORIO",
+      "tipo": "critico",
+      "criterio": "ECC",
+      "resultado": "CUMPLE",
+      "fallas": []
+    },
+    {
+      "item": "Escucha activa",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Empatía y personalización",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Presentación del producto",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "SI",
+      "puntaje": 10,
+      "observacion": ""
+    },
+    {
+      "item": "Ortografía y redacción (canal chat)",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Generación de confianza",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Pre-cierre comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "NO",
+      "puntaje": 0,
+      "observacion": "Recomendación brindar el valor del cargo básico con el descuento en el primer mes, en este caso solo informas 89.900 pagaría la mitad. Aunque le dijiste que no se cobra hasta que no se instale, te recomiendo tener cierres un poco mas agresivos para lograr el cierre en línea y evitar que le cliente se arrepienta o que tome servicio con otro operador."
+    },
+    {
+      "item": "Perfilamiento comercial",
+      "tipo": "blanda",
+      "peso_max": 15,
+      "resultado": "SI",
+      "puntaje": 15,
+      "observacion": ""
+    },
+    {
+      "item": "Acompañamiento al cliente en tiempos de espera",
+      "tipo": "blanda",
+      "peso_max": 10,
+      "resultado": "NO",
+      "puntaje": 0,
+      "observacion": "Como recomendación informa al cliente que lo vas a dejar en línea para realizar las consultas y agradece el tiempo en espera al retomar la llamada."
+    },
+    {
+      "item": "Ocupación de canal",
+      "tipo": "estadistico",
+      "valor": "No"
+    },
+    {
+      "item": "PQR procedentes para el cliente",
+      "tipo": "estadistico",
+      "valor": "No"
+    }
+  ],
+  "id": "local_eval_1783984656960_2aih",
+  "createdAt": "2026-07-13T23:17:36.960Z"
+}
